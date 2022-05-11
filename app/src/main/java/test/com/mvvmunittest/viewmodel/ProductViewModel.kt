@@ -1,8 +1,12 @@
-package test.com.mvvmunittest
+package test.com.mvvmunittest.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import test.com.mvvmunittest.view.Event
+import test.com.mvvmunittest.IProductRepository
 import test.com.mvvmunittest.api.ProductResponse
+import test.com.mvvmunittest.instrumentedtest.SharedPreferenceManager
+import test.com.mvvmunittest.view.ProductActivity
 
 open class ProductViewModel (private val productRepository: IProductRepository) : ViewModel(){
     var productId: MutableLiveData<String> = MutableLiveData()
@@ -35,12 +39,19 @@ open class ProductViewModel (private val productRepository: IProductRepository) 
         productRepository.buy(productId, numbers, object : IProductRepository.BuyProductCallback {
             override fun onBuyResult(isSuccess: Boolean) {
                 if (isSuccess) {
-                    buySuccessText.value = Event("購買成功")
+                    buySuccessText.value = Event("Buy success")
                     totalPrice.value = (productPrice.value!!.toInt() * numbers).toString()
                 } else {
-                    alertText.value = Event("購買失敗")
+                    alertText.value = Event("Buy fail")
                 }
             }
         })
+    }
+
+    fun saveProductOrder(productActivity: ProductActivity, quenty: String) {
+        productRepository.setPreferenceManager(
+            sharedPreferenceManager = SharedPreferenceManager(productActivity)
+        )
+        productRepository.saveProductQuenty(quenty)
     }
 }

@@ -1,4 +1,4 @@
-package test.com.mvvmunittest
+package test.com.mvvmunittest.view
 
 open class Event<out T>(private val content: T) {
 

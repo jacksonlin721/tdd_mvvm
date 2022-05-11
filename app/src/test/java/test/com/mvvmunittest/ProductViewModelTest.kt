@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations
 import test.com.mvvmunittest.api.IProductAPI
 import test.com.mvvmunittest.api.ProductAPI
 import test.com.mvvmunittest.api.ProductResponse
+import test.com.mvvmunittest.viewmodel.ProductViewModel
 import test.com.mvvmunittest.IProductRepository as ProductRepository
 
 class ProductViewModelTest {

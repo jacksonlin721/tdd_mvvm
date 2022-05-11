@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MVVMUnitTest" >
 
-        <activity android:name=".ProductActivity"
+        <activity android:name=".view.ProductActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

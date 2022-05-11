@@ -2,11 +2,14 @@ package test.com.mvvmunittest
 
 import test.com.mvvmunittest.api.IProductAPI
 import test.com.mvvmunittest.api.ProductResponse
+import test.com.mvvmunittest.instrumentedtest.ISharePreferenceManager
+import test.com.mvvmunittest.instrumentedtest.SharedPreferenceManager
 
 interface IProductRepository {
     fun getProduct(productId: String, loadProductCallback: LoadProductCallback)
-
     fun buy(id: String, items: Int, callback: BuyProductCallback)
+    fun setPreferenceManager(sharedPreferenceManager: ISharePreferenceManager)
+    fun saveProductQuenty(quenty: String)
 
     interface LoadProductCallback {
 
@@ -21,10 +24,11 @@ interface IProductRepository {
 }
 
 class ProductRepository(private val productAPI: IProductAPI) : IProductRepository {
+    lateinit var mSharedPreferenceManager: ISharePreferenceManager
 
     override fun buy(id: String, items: Int, callback: IProductRepository.BuyProductCallback) {
         //假設買超過10份就會失敗
-        if (items <= 10) {
+        if (items in 1..10) {
             //模擬購買成功
             callback.onBuyResult(true)
         }else{
@@ -40,5 +44,13 @@ class ProductRepository(private val productAPI: IProductAPI) : IProductRepositor
                 loadProductCallback.onProductResult(productResponse)
             }
         })
+    }
+
+    override fun setPreferenceManager(sharedPreferenceManager: ISharePreferenceManager) {
+        mSharedPreferenceManager = sharedPreferenceManager
+    }
+
+    override fun saveProductQuenty(id: String) {
+        mSharedPreferenceManager.saveProductQuenty(SharedPreferenceManager.PRODUCT_KEY, id)
     }
 }
