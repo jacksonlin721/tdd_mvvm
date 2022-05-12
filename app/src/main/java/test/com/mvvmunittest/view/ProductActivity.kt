@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import test.com.mvvmunittest.ProductRepository
@@ -20,11 +21,13 @@ class ProductActivity : AppCompatActivity() {
 
     private lateinit var productViewModel: ProductViewModel
 
+    lateinit var dataBinding: ActivityProductBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product)
 
-        val dataBinding = DataBindingUtil.setContentView<ActivityProductBinding>(this,
+        dataBinding = DataBindingUtil.setContentView<ActivityProductBinding>(this,
             R.layout.activity_product
         )
 

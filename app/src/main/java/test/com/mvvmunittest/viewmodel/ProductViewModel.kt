@@ -35,9 +35,11 @@ open class ProductViewModel (private val productRepository: IProductRepository) 
     fun buy() {
         val productId = productId.value ?: ""
         val numbers = (productItems.value ?: "0").toInt()
+        println("[buy] in viewModel")
 
         productRepository.buy(productId, numbers, object : IProductRepository.BuyProductCallback {
             override fun onBuyResult(isSuccess: Boolean) {
+                println("[buy] in viewModel onBuyResult")
                 if (isSuccess) {
                     buySuccessText.value = Event("Buy success")
                     totalPrice.value = (productPrice.value!!.toInt() * numbers).toString()

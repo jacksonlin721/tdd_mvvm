@@ -22,7 +22,7 @@ class ProductViewModelTest {
 
     @Mock
     lateinit var repository: ProductRepository
-    private var productResponse = ProductResponse()
+    private var expectProductResponse = ProductResponse()
 
     private lateinit var viewModel: ProductViewModel
 
@@ -30,10 +30,10 @@ class ProductViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
 
-        productResponse.id = "pixel3"
-        productResponse.name = "Google Pixel 3"
-        productResponse.price = 27000
-        productResponse.desc = "Desc"
+        expectProductResponse.id = "pixel3"
+        expectProductResponse.name = "Google Pixel 3"
+        expectProductResponse.price = 27000
+        expectProductResponse.desc = "Desc"
 
         viewModel = ProductViewModel(repository)
     }
@@ -49,12 +49,12 @@ class ProductViewModelTest {
         verify(repository).getProduct(eq(productID), capture(loadProductCallbackCaptor))
 
         //將callback攔截下載並指定productResponse的值。
-        loadProductCallbackCaptor.value.onProductResult(productResponse)
+        loadProductCallbackCaptor.value.onProductResult(expectProductResponse)
 
-        assertEquals(productResponse.name, viewModel.productName.value)
-        assertEquals(productResponse.id, viewModel.productId.value)
-        assertEquals(productResponse.price, viewModel.productPrice.value)
-        assertEquals(productResponse.desc, viewModel.productDesc.value)
+        assertEquals(expectProductResponse.name, viewModel.productName.value)
+        assertEquals(expectProductResponse.id, viewModel.productId.value)
+        assertEquals(expectProductResponse.price, viewModel.productPrice.value)
+        assertEquals(expectProductResponse.desc, viewModel.productDesc.value)
     }
 
     @Test
